@@ -1,8 +1,17 @@
 ﻿using System;
 using System.ComponentModel.Design;
+using System.Security.Cryptography.X509Certificates;
 
+/// <summary>
+/// Modul Verfahren und Werkzeuge moderner Softwaretechnik im WS 20/21
+/// Einsendeaufgabe CCD (Clean Code Developer)
+/// Schlecht geschriebener Basiscode
+/// </summary>
 namespace TicTocToe
 {
+    /// <summary>
+    /// Programm TicTacToe - viel Spass dabei
+    /// </summary>
     class Program
     {
         static int spieler = 1;
@@ -24,7 +33,11 @@ namespace TicTocToe
             ausgabe();
 
             spieler = 1;
-            eingabe(1);
+
+            while (spieler != 0)
+            {
+                eingabe(spieler);
+            }
         }
 
         static void eingabe(int s)
@@ -38,7 +51,7 @@ namespace TicTocToe
                 string zweiter = f[1].ToString();
 
                 if (erster != "a" && erster != "b" && erster != "c") return;
-                if (zweiter != "1" && erster != "2" && erster != "3") return;
+                if (zweiter != "1" && zweiter != "2" && zweiter != "3") return;
 
                 if (erster == "a")
                 {
@@ -92,7 +105,7 @@ namespace TicTocToe
                 if (g1 == 0)
                 {
                     spieler = 2;
-                    eingabe(2);
+                    return;
                 }
                 else
                 {
@@ -108,7 +121,7 @@ namespace TicTocToe
                 string zweiter = f[1].ToString();
 
                 if (erster != "a" && erster != "b" && erster != "c") return;
-                if (zweiter != "1" && erster != "2" && erster != "3") return;
+                if (zweiter != "1" && zweiter != "2" && zweiter != "3") return;
 
                 if (erster == "a")
                 {
@@ -162,7 +175,7 @@ namespace TicTocToe
                 if (g2 == 0)
                 {
                     spieler = 1;
-                    eingabe(1);
+                    return;
                 }
                 else
                 {
@@ -183,9 +196,9 @@ namespace TicTocToe
             Console.WriteLine("-|-|-|-");
             Console.WriteLine(String.Format("{0}|{1}|{2}|{3}", new[] {"1", a1, b1, c1}));
             Console.WriteLine("-|-|-|-");
-            Console.WriteLine(String.Format("{0}|{1}|{2}|{3}", new[] {"2", a2, b2, c2 }));
+            Console.WriteLine(String.Format("{0}|{1}|{2}|{3}", new[] {"2", a2, b2, c2}));
             Console.WriteLine("-|-|-|-");
-            Console.WriteLine(String.Format("{0}|{1}|{2}|{3}", new[] {"3", a3, b3, c3 }));
+            Console.WriteLine(String.Format("{0}|{1}|{2}|{3}", new[] {"3", a3, b3, c3}));
             Console.WriteLine();
         }
 
