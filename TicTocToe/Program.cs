@@ -30,7 +30,7 @@ namespace TicTocToe
             Console.WriteLine("Lass uns TikTakToe spielen!");
             Console.WriteLine("Spieler 1 (O), Spieler 2 (X)");
 
-            ausgabe();
+            ausgabe();  //test
 
             spieler = 1;
 
