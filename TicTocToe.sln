@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTocToe", "TicTocToe\TicTocToe.csproj", "{0A284201-B775-4F77-8890-528FB2772429}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTocToe", "TicTocToe\TicTocToe.csproj", "{0A284201-B775-4F77-8890-528FB2772429}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CCD", "CCD", "{FEE80683-943F-4982-B24E-2A6DF9DA5333}"
+	ProjectSection(SolutionItems) = preProject
+		..\EAs\04 CCD\CCD Cheat Sheet.pdf = ..\EAs\04 CCD\CCD Cheat Sheet.pdf
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
