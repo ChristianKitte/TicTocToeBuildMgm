@@ -1,11 +1,11 @@
 ﻿using System;
 using System.ComponentModel.Design;
 using System.Security.Cryptography.X509Certificates;
+using TicTocLib;
 
 /// <summary>
 /// Modul Verfahren und Werkzeuge moderner Softwaretechnik im WS 20/21
 /// Einsendeaufgabe CCD (Clean Code Developer)
-/// Schlecht geschriebener Basiscode
 /// </summary>
 namespace TicTocToe
 {
@@ -14,209 +14,175 @@ namespace TicTocToe
     /// </summary>
     class Program
     {
-        static int spieler = 1;
-        static string a1 = " ";
-        static string a2 = " ";
-        static string a3 = " ";
-        static string b1 = " ";
-        static string b2 = " ";
-        static string b3 = " ";
-        static string c1 = " ";
-        static string c2 = " ";
-        static string c3 = " ";
-
         static void Main(string[] args)
         {
-            Console.WriteLine("Lass uns TikTakToe spielen!");
-            Console.WriteLine("Spieler 1 (O), Spieler 2 (X)");
-
-            ausgabe();  //test
-
-            spieler = 1;
-
-            while (spieler != 0)
-            {
-                eingabe(spieler);
-            }
+            Spiel aktuellesSpiel = new Spiel();
+            aktuellesSpiel.StarteSpiel();
         }
-
-        static void eingabe(int s)
+     
+        public class Spiel
         {
-            if (spieler == 1)
+            private Spielfeld spielfeld = new Spielfeld();
+
+            public Spiel()
             {
-                Console.WriteLine("Eingabe Spieler 1");
+            }
 
-                string f = Console.ReadLine();
-                string erster = f[0].ToString();
-                string zweiter = f[1].ToString();
+            public void StarteSpiel()
+            {
+                Console.WriteLine("Lass uns TikTakToe spielen!");
+                Console.WriteLine("Spieler 1 (O), Spieler 2 (X)");
 
-                if (erster != "a" && erster != "b" && erster != "c") return;
-                if (zweiter != "1" && zweiter != "2" && zweiter != "3") return;
+                ausgabe();
 
+                Spieler aktuellerSpieler = Spieler.Spieler1;
+
+                while (spielfeld.GibGewinnerZurück == Spieler.Undefiniert)
+                {
+                    eingabe(aktuellerSpieler);
+
+                    if (spielfeld.GibGewinnerZurück == Spieler.Undefiniert)
+                    {
+                        if (aktuellerSpieler == Spieler.Spieler1)
+                        {
+                            aktuellerSpieler = Spieler.Spieler2;
+                        }
+                        else if (aktuellerSpieler == Spieler.Spieler2)
+                        {
+                             aktuellerSpieler = Spieler.Spieler1;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Gewinner " + spielfeld.GibGewinnerZurück.ToString());
+                    }
+                }
+            }
+
+
+            private void eingabe(Spieler aktuellerSpieler)
+            {
+                Console.WriteLine(aktuellerSpieler.ToString());
+
+                string aktuelleZeile = Console.ReadLine();
+                string erstesZeichen = aktuelleZeile[0].ToString();
+                string zweitesZeichen = aktuelleZeile[1].ToString();
+
+                Feld ausgewähltesFeld = EingabeAuswerten(erstesZeichen, zweitesZeichen);
+
+                Spielzug ausgewählerSpielzug = new Spielzug(aktuellerSpieler, ausgewähltesFeld);
+                spielfeld.spielzugHinzufügen(ausgewählerSpielzug);
+
+                ausgabe();
+
+                return;
+            }
+
+            public TicTocLib.Feld EingabeAuswerten(string erster, string zweiter)
+            {
+                Feld erkanntesEingabefeld = Feld.Ungültig;
+                if (erster != "a" && erster != "b" && erster != "c") return erkanntesEingabefeld;
+                if (zweiter != "1" && zweiter != "2" && zweiter != "3") return erkanntesEingabefeld;
                 if (erster == "a")
                 {
                     if (zweiter == "1")
                     {
-                        a1 = "O";
+                        erkanntesEingabefeld = Feld.A1;
                     }
                     else if (zweiter == "2")
                     {
-                        a2 = "O";
+                        erkanntesEingabefeld = Feld.A2;
                     }
                     else if (zweiter == "3")
                     {
-                        a3 = "O";
+                        erkanntesEingabefeld = Feld.A3;
                     }
                 }
+
                 else if (erster == "b")
                 {
                     if (zweiter == "1")
                     {
-                        b1 = "O";
+                        erkanntesEingabefeld = Feld.B1;
                     }
                     else if (zweiter == "2")
                     {
-                        b2 = "O";
+                        erkanntesEingabefeld = Feld.B2;
                     }
                     else if (zweiter == "3")
                     {
-                        b3 = "O";
+                        erkanntesEingabefeld = Feld.B3;
                     }
                 }
+
                 else if (erster == "c")
                 {
                     if (zweiter == "1")
                     {
-                        c1 = "O";
+                        erkanntesEingabefeld = Feld.C1;
                     }
                     else if (zweiter == "2")
                     {
-                        c2 = "O";
+                        erkanntesEingabefeld = Feld.C2;
                     }
                     else if (zweiter == "3")
                     {
-                        c3 = "O";
+                        erkanntesEingabefeld = Feld.C3;
                     }
                 }
 
-                ausgabe();
-
-                int g1 = test();
-                if (g1 == 0)
-                {
-                    spieler = 2;
-                    return;
-                }
-                else
-                {
-                    Console.WriteLine("Spieler 1 gewinnt");
-                }
+                return erkanntesEingabefeld;
             }
-            else
+
+            public void ausgabe()
             {
-                Console.WriteLine("Eingabe Spieler 2 ");
-
-                string f = Console.ReadLine();
-                string erster = f[0].ToString();
-                string zweiter = f[1].ToString();
-
-                if (erster != "a" && erster != "b" && erster != "c") return;
-                if (zweiter != "1" && zweiter != "2" && zweiter != "3") return;
-
-                if (erster == "a")
+                Console.Clear();
+                string a1 = konvertiereSpielerInSymbol(Feld.A1);
+                string a2 = konvertiereSpielerInSymbol(Feld.A2);
+                string a3 = konvertiereSpielerInSymbol(Feld.A3);
+                string b1 = konvertiereSpielerInSymbol(Feld.B1);
+                string b2 = konvertiereSpielerInSymbol(Feld.B2);
+                string b3 = konvertiereSpielerInSymbol(Feld.B3);
+                string c1 = konvertiereSpielerInSymbol(Feld.C1);
+                string c2 = konvertiereSpielerInSymbol(Feld.C2);
+                string c3 = konvertiereSpielerInSymbol(Feld.C3);
+                Console.WriteLine("Lass uns TikTakToe spielen!");
+                Console.WriteLine("Spieler 1 (O), Spieler 2 (X)");
+                Console.WriteLine();
+                Console.WriteLine(String.Format("{0}|{1}|{2}|{3}", new[]
                 {
-                    if (zweiter == "1")
-                    {
-                        a1 = "X";
-                    }
-                    else if (zweiter == "2")
-                    {
-                        a2 = "X";
-                    }
-                    else if (zweiter == "3")
-                    {
-                        a3 = "X";
-                    }
-                }
-                else if (erster == "b")
-                {
-                    if (zweiter == "1")
-                    {
-                        b1 = "X";
-                    }
-                    else if (zweiter == "2")
-                    {
-                        b2 = "X";
-                    }
-                    else if (zweiter == "3")
-                    {
-                        b3 = "X";
-                    }
-                }
-                else if (erster == "c")
-                {
-                    if (zweiter == "1")
-                    {
-                        c1 = "X";
-                    }
-                    else if (zweiter == "2")
-                    {
-                        c2 = "X";
-                    }
-                    else if (zweiter == "3")
-                    {
-                        c3 = "X";
-                    }
-                }
+                    " ", "A", "B", "C"
+                }));
 
-                ausgabe();
+                Console.WriteLine("-|-|-|-");
+                Console.WriteLine(String.Format("{0}|{1}|{2}|{3}", new[]
+                {
+                    "1", a1, b1, c1
+                }));
 
-                int g2 = test();
-                if (g2 == 0)
+                Console.WriteLine("-|-|-|-");
+                Console.WriteLine(String.Format("{0}|{1}|{2}|{3}", new[]
                 {
-                    spieler = 1;
-                    return;
-                }
-                else
+                    "2", a2, b2, c2
+                }));
+
+                Console.WriteLine("-|-|-|-");
+                Console.WriteLine(String.Format("{0}|{1}|{2}|{3}", new[]
                 {
-                    Console.WriteLine("Spieler 2 gewinnt");
-                }
+                    "3", a3, b3, c3
+                }));
+
+                Console.WriteLine();
             }
-        }
 
-        static void ausgabe()
-        {
-            Console.Clear();
+            public String konvertiereSpielerInSymbol(Feld feld)
+            {
+                Spieler spieler = spielfeld.GibSpielerDesFeldesZurück(feld);
+                if (spieler == Spieler.Spieler1) return "X";
+                if (spieler == Spieler.Spieler2) return "O";
 
-            Console.WriteLine("Lass uns TikTakToe spielen!");
-            Console.WriteLine("Spieler 1 (O), Spieler 2 (X)");
-            Console.WriteLine();
-
-            Console.WriteLine(String.Format("{0}|{1}|{2}|{3}", new[] {" ", "A", "B", "C"}));
-            Console.WriteLine("-|-|-|-");
-            Console.WriteLine(String.Format("{0}|{1}|{2}|{3}", new[] {"1", a1, b1, c1}));
-            Console.WriteLine("-|-|-|-");
-            Console.WriteLine(String.Format("{0}|{1}|{2}|{3}", new[] {"2", a2, b2, c2}));
-            Console.WriteLine("-|-|-|-");
-            Console.WriteLine(String.Format("{0}|{1}|{2}|{3}", new[] {"3", a3, b3, c3}));
-            Console.WriteLine();
-        }
-
-        static int test()
-        {
-            if (a1.Trim() == "O" && a2.Trim() == "O" && a3.Trim() == "O") return 1;
-            if (b1.Trim() == "O" && b2.Trim() == "O" && b3.Trim() == "O") return 1;
-            if (c1.Trim() == "O" && c2.Trim() == "O" && c3.Trim() == "O") return 1;
-            if (a1.Trim() == "O" && b2.Trim() == "O" && c3.Trim() == "O") return 1;
-            if (c1.Trim() == "O" && b2.Trim() == "O" && a3.Trim() == "O") return 1;
-
-            if (a1.Trim() == "X" && a2.Trim() == "X" && a3.Trim() == "X") return 2;
-            if (b1.Trim() == "X" && b2.Trim() == "X" && b3.Trim() == "X") return 2;
-            if (c1.Trim() == "X" && c2.Trim() == "X" && c3.Trim() == "X") return 2;
-            if (a1.Trim() == "X" && b2.Trim() == "X" && c3.Trim() == "X") return 2;
-            if (c1.Trim() == "X" && b2.Trim() == "X" && a3.Trim() == "X") return 2;
-
-            return 0;
+                return " ";
+            }
         }
     }
 }
