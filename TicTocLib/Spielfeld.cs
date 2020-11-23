@@ -2,10 +2,10 @@
 
 namespace TicTocLib
 {
-    /// <summary>
+         /// <summary>
     /// Definiert ein TicTacToe Spielfeld
     /// </summary>
-    public class Spielfeld
+    public class Spielfeld : ISpielerZuFeldZuordnung
     {
         private Spieler a1 = Spieler.Undefiniert;
         private Spieler a2 = Spieler.Undefiniert;
