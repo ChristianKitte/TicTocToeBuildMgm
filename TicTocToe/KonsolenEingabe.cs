@@ -19,67 +19,86 @@ namespace TicTocToe
         /// <returns>Eine Instanz vom Typ Spielzug</returns>
         public Spielzug LeseEingabe(Spieler aktuellerSpieler)
         {
+            Konsolenwerte wert = new Konsolenwerte();
             Console.WriteLine(aktuellerSpieler.ToString());
 
-            string aktuelleZeile = Console.ReadLine();
-            string erstesZeichen = aktuelleZeile[0].ToString();
-            string zweitesZeichen = aktuelleZeile[1].ToString();
+            Feld ausgewähltesFeld = Feld.Ungültig;
 
-            Feld ausgewähltesFeld = EingabeAuswerten(erstesZeichen, zweitesZeichen);
+            while (ausgewähltesFeld == Feld.Ungültig)
+            {
+                string aktuelleZeile = Console.ReadLine();
+                string erstesZeichen = aktuelleZeile[0].ToString();
+                string zweitesZeichen = aktuelleZeile[1].ToString();
+
+                ausgewähltesFeld = EingabeAuswerten(erstesZeichen.Trim().ToLower(), zweitesZeichen.Trim().ToLower());
+
+                if (ausgewähltesFeld == Feld.Ungültig)
+                {
+                    Console.WriteLine(wert.ungültigeEingabe);
+                }
+            }
 
             Spielzug ausgewählerSpielzug = new Spielzug(aktuellerSpieler, ausgewähltesFeld);
             return ausgewählerSpielzug;
         }
 
-
+        /// <summary>
+        /// Wertet die Eingabe aus
+        /// </summary>
+        /// <param name="erster">Das erste übergebene Zeichen</param>
+        /// <param name="zweiter">Das zweite übergebene Zeichen</param>
+        /// <returns>Gibt ein Wert der Enumeration Feld zurück</returns>
         private TicTocLib.Feld EingabeAuswerten(string erster, string zweiter)
         {
+            Konsolenwerte wert=new Konsolenwerte();
+
             Feld erkanntesEingabefeld = Feld.Ungültig;
-            if (erster != "a" && erster != "b" && erster != "c") return erkanntesEingabefeld;
-            if (zweiter != "1" && zweiter != "2" && zweiter != "3") return erkanntesEingabefeld;
-            if (erster == "a")
+            if (erster != wert.A && erster != wert.B && erster != wert.C) return erkanntesEingabefeld;
+            if (zweiter != wert.EINS && zweiter != wert.ZWEI && zweiter != wert.DREI) return erkanntesEingabefeld;
+
+            if (erster == wert.A)
             {
-                if (zweiter == "1")
+                if (zweiter == wert.EINS)
                 {
                     erkanntesEingabefeld = Feld.A1;
                 }
-                else if (zweiter == "2")
+                else if (zweiter == wert.ZWEI)
                 {
                     erkanntesEingabefeld = Feld.A2;
                 }
-                else if (zweiter == "3")
+                else if (zweiter == wert.DREI)
                 {
                     erkanntesEingabefeld = Feld.A3;
                 }
             }
 
-            else if (erster == "b")
+            else if (erster == wert.B)
             {
-                if (zweiter == "1")
+                if (zweiter == wert.EINS)
                 {
                     erkanntesEingabefeld = Feld.B1;
                 }
-                else if (zweiter == "2")
+                else if (zweiter == wert.ZWEI)
                 {
                     erkanntesEingabefeld = Feld.B2;
                 }
-                else if (zweiter == "3")
+                else if (zweiter == wert.DREI)
                 {
                     erkanntesEingabefeld = Feld.B3;
                 }
             }
 
-            else if (erster == "c")
+            else if (erster == wert.C)
             {
-                if (zweiter == "1")
+                if (zweiter == wert.EINS)
                 {
                     erkanntesEingabefeld = Feld.C1;
                 }
-                else if (zweiter == "2")
+                else if (zweiter == wert.ZWEI)
                 {
                     erkanntesEingabefeld = Feld.C2;
                 }
-                else if (zweiter == "3")
+                else if (zweiter == wert.DREI)
                 {
                     erkanntesEingabefeld = Feld.C3;
                 }

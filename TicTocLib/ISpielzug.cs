@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace TicTocLib
 {
+    /// <summary>
+    /// Definiert einen Spielzug
+    /// </summary>
     public interface ISpielzug
     {
         /// <summary>
