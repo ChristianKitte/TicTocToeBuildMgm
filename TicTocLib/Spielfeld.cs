@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Design;
 
 namespace TicTocLib
 {
@@ -31,15 +32,39 @@ namespace TicTocLib
         /// <param name="spielzug">Eine Instanz vom Typ Spielzug</param>
         public void spielzugHinzufügen(ISpielzug spielzug)
         {
-            if (spielzug.GesetztesFeld == Feld.A1) this.a1 = spielzug.SetzenderSpieler;
-            if (spielzug.GesetztesFeld == Feld.A2) this.a2 = spielzug.SetzenderSpieler;
-            if (spielzug.GesetztesFeld == Feld.A3) this.a3 = spielzug.SetzenderSpieler;
-            if (spielzug.GesetztesFeld == Feld.B1) this.b1 = spielzug.SetzenderSpieler;
-            if (spielzug.GesetztesFeld == Feld.B2) this.b2 = spielzug.SetzenderSpieler;
-            if (spielzug.GesetztesFeld == Feld.B3) this.b3 = spielzug.SetzenderSpieler;
-            if (spielzug.GesetztesFeld == Feld.C1) this.c1 = spielzug.SetzenderSpieler;
-            if (spielzug.GesetztesFeld == Feld.C2) this.c2 = spielzug.SetzenderSpieler;
-            if (spielzug.GesetztesFeld == Feld.C3) this.c3 = spielzug.SetzenderSpieler;
+            switch (spielzug.GesetztesFeld)
+            {
+                case Feld.A1:
+                    this.a1 = spielzug.SetzenderSpieler;
+                    break;
+                case Feld.A2:
+                    this.a2 = spielzug.SetzenderSpieler;
+                    break;
+                case Feld.A3:
+                    this.a3 = spielzug.SetzenderSpieler;
+                    break;
+                case Feld.B1:
+                    this.b1 = spielzug.SetzenderSpieler;
+                    break;
+                case Feld.B2:
+                    this.b2 = spielzug.SetzenderSpieler;
+                    break;
+                case Feld.B3:
+                    this.b3 = spielzug.SetzenderSpieler;
+                    break;
+                case Feld.C1:
+                    this.c1 = spielzug.SetzenderSpieler;
+                    break;
+                case Feld.C2:
+                    this.c2 = spielzug.SetzenderSpieler;
+                    break;
+                case Feld.C3:
+                    this.c3 = spielzug.SetzenderSpieler;
+                    break;
+                default:
+                    this.c3 = Spieler.Undefiniert;
+                    break;
+            }
         }
 
         /// <summary>
@@ -89,17 +114,43 @@ namespace TicTocLib
         /// <returns></returns>
         public Spieler GibSpielerDesFeldesZurück(Feld feld)
         {
-            if (feld == Feld.A1) return a1;
-            if (feld == Feld.A2) return a2;
-            if (feld == Feld.A3) return a3;
-            if (feld == Feld.B1) return b1;
-            if (feld == Feld.B2) return b2;
-            if (feld == Feld.B3) return b3;
-            if (feld == Feld.C1) return c1;
-            if (feld == Feld.C2) return c2;
-            if (feld == Feld.C3) return c3;
+            Spieler spieler;
 
-            return Spieler.Undefiniert;
+            switch (feld)
+            {
+                case Feld.A1:
+                    spieler = a1;
+                    break;
+                case Feld.A2:
+                    spieler = a2;
+                    break;
+                case Feld.A3:
+                    spieler = a3;
+                    break;
+                case Feld.B1:
+                    spieler = b1;
+                    break;
+                case Feld.B2:
+                    spieler = b2;
+                    break;
+                case Feld.B3:
+                    spieler = b3;
+                    break;
+                case Feld.C1:
+                    spieler = c1;
+                    break;
+                case Feld.C2:
+                    spieler = c2;
+                    break;
+                case Feld.C3:
+                    spieler = c3;
+                    break;
+                default:
+                    spieler = Spieler.Undefiniert;
+                    break;
+            }
+
+            return spieler;
         }
     }
 }
