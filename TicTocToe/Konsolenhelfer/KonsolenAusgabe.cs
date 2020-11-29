@@ -5,18 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using TicTocLib;
 
-namespace TicTocToe
+namespace TicTocToe.Konsolenhelfer
 {
     /// <summary>
     /// Übernimmt die Ausgabe des Spielfeldes in eine Konsole
     /// </summary>
-    public class KonsolenAusgabe
+    public class KonsolenAusgabe:IKonsolenAusgabe
     {
+        private IKonsolenwerte konsolenWerte;
+
         /// <summary>
         /// Der Konstruktor
         /// </summary>
-        public KonsolenAusgabe()
+        public KonsolenAusgabe(IKonsolenwerte konsolenWerte)
         {
+            this.konsolenWerte = konsolenWerte;
         }
 
         /// <summary>
@@ -24,8 +27,6 @@ namespace TicTocToe
         /// </summary>
         public void SpielInKonsoleAusgeben(ISpielerZuFeldZuordnung spielerZuFeldZuordnung)
         {
-            Konsolenwerte wert = new Konsolenwerte();
-
             Console.Clear();
 
             string a1 = KonvertiereSpielerInSymbol(Feld.A1, spielerZuFeldZuordnung);
@@ -38,30 +39,30 @@ namespace TicTocToe
             string c2 = KonvertiereSpielerInSymbol(Feld.C2, spielerZuFeldZuordnung);
             string c3 = KonvertiereSpielerInSymbol(Feld.C3, spielerZuFeldZuordnung);
 
-            Console.WriteLine(wert.begrüssungstext1);
-            Console.WriteLine(wert.begrüssungstext2);
+            Console.WriteLine(konsolenWerte.begrüssungstext1);
+            Console.WriteLine(konsolenWerte.begrüssungstext2);
             Console.WriteLine();
             Console.WriteLine(String.Format("{0}|{1}|{2}|{3}", new[]
             {
-                " ", wert.A.ToUpper(), wert.B.ToUpper(), wert.C.ToUpper()
+                " ", konsolenWerte.A.ToUpper(), konsolenWerte.B.ToUpper(), konsolenWerte.C.ToUpper()
             }));
 
-            Console.WriteLine(wert.spielfeldTrennlinie);
+            Console.WriteLine(konsolenWerte.spielfeldTrennlinie);
             Console.WriteLine(String.Format("{0}|{1}|{2}|{3}", new[]
             {
-                wert.EINS, a1, b1, c1
+                konsolenWerte.EINS, a1, b1, c1
             }));
 
-            Console.WriteLine(wert.spielfeldTrennlinie);
+            Console.WriteLine(konsolenWerte.spielfeldTrennlinie);
             Console.WriteLine(String.Format("{0}|{1}|{2}|{3}", new[]
             {
-                wert.ZWEI, a2, b2, c2
+                konsolenWerte.ZWEI, a2, b2, c2
             }));
 
-            Console.WriteLine(wert.spielfeldTrennlinie);
+            Console.WriteLine(konsolenWerte.spielfeldTrennlinie);
             Console.WriteLine(String.Format("{0}|{1}|{2}|{3}", new[]
             {
-                wert.DREI, a3, b3, c3
+                konsolenWerte.DREI, a3, b3, c3
             }));
 
             Console.WriteLine();
@@ -73,7 +74,7 @@ namespace TicTocToe
         /// <param name="feld">Das Feld, welches ausgegeben werden soll</param>
         /// <param name="spielerZuFeldZuordnung">Eine Instanz vom Typ ISpielerZuFeldZuordnung </param>
         /// <returns>Ein String, der für den zum Feld gehörenden Spieler steht</returns>
-        public String KonvertiereSpielerInSymbol(Feld feld, ISpielerZuFeldZuordnung spielerZuFeldZuordnung)
+        private String KonvertiereSpielerInSymbol(Feld feld, ISpielerZuFeldZuordnung spielerZuFeldZuordnung)
         {
             Konsolenwerte wert = new Konsolenwerte();
 

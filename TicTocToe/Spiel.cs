@@ -4,23 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TicTocLib;
+using TicTocToe.Konsolenhelfer;
 
 namespace TicTocToe
 {
     /// <summary>
     /// Die Klasse Spiel kapselt eine einzelne Partie des Spiels TikTacToe. Es wird direkt aus Main() aufgerufen
     /// </summary>
-    public class Spiel
+    public class Spiel:ISpiel
     {
         private Spielfeld spielfeld = new Spielfeld();
-        private KonsolenEingabe konsolenEingabe = new KonsolenEingabe();
-        private KonsolenAusgabe konsolenAusgabe = new KonsolenAusgabe();
+
+        private IKonsolenEingabe konsolenEingabe;
+        private IKonsolenAusgabe konsolenAusgabe;
+        private IKonsolenwerte konsolenWerte;
 
         /// <summary>
         /// Der Konstruktor
         /// </summary>
-        public Spiel()
+        public Spiel(IKonsolenAusgabe konsolenAusgabe, IKonsolenEingabe konsolenEingabe, IKonsolenwerte konsolenWerte)
         {
+            this.konsolenAusgabe = konsolenAusgabe;
+            this.konsolenEingabe = konsolenEingabe;
+            this.konsolenWerte = konsolenWerte;
         }
 
         /// <summary>
@@ -28,7 +34,6 @@ namespace TicTocToe
         /// </summary>
         public void StarteSpiel()
         {
-            Konsolenwerte wert = new Konsolenwerte();
             Console.WriteLine("Lass uns TikTakToe spielen!");
             Console.WriteLine("Spieler 1 (O), Spieler 2 (X)");
 
@@ -56,7 +61,7 @@ namespace TicTocToe
                 else
                 {
                     Console.WriteLine(string.Format("{0} {1}",
-                        new object[] { wert.gewinntext, spielfeld.GibGewinnerZurück.ToString()}));
+                        new object[] { konsolenWerte.gewinntext, spielfeld.GibGewinnerZurück.ToString()}));
                 }
             }
         }
