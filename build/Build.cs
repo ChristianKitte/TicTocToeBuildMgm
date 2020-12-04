@@ -51,15 +51,28 @@ class Build : NukeBuild
             DotNetRestore(s => s
                 .SetProjectFile(Solution));
         });
+     
+    Target Deploy => _ => _
+        .After(Compile)
+        .Executes(() =>
+        {
+            //System.IO.File.CreateText(@"c:\aaa\buh.txt").Write("Buh");
+        });
 
     Target Compile => _ => _
         .DependsOn(Restore)
         .Executes(() =>
         {
+            var f = System.IO.File.CreateText(OutputDirectory + "\\buh.txt");
+            f.Write("Buh");
+            f.Flush();
+            f.Close();
+
             DotNetBuild(s => s
                 .SetProjectFile(Solution)
                 .SetConfiguration(Configuration)
                 .EnableNoRestore());
         });
+
 
 }
