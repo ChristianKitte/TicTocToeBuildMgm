@@ -62,6 +62,7 @@ namespace TicTocToe
                 {
                     Console.WriteLine(string.Format("{0} {1}",
                         new object[] { konsolenWerte.gewinntext, spielfeld.GibGewinnerZurück.ToString()}));
+                    Console.ReadLine();
                 }
             }
         }
