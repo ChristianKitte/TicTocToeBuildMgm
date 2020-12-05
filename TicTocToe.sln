@@ -14,14 +14,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTocLib", "TicTocLib\TicT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{B7F88844-324B-44EE-8911-C813FBF37F37}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tutorial", "Tutorial", "{786ABA1B-D435-4086-8049-E54D259AC84A}"
+	ProjectSection(SolutionItems) = preProject
+		tutorial\Tutorial.html = tutorial\Tutorial.html
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B7F88844-324B-44EE-8911-C813FBF37F37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7F88844-324B-44EE-8911-C813FBF37F37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A284201-B775-4F77-8890-528FB2772429}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0A284201-B775-4F77-8890-528FB2772429}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A284201-B775-4F77-8890-528FB2772429}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -30,6 +33,8 @@ Global
 		{7B0AEBAE-FA7B-4A1F-A9ED-EB9531B528F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B0AEBAE-FA7B-4A1F-A9ED-EB9531B528F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B0AEBAE-FA7B-4A1F-A9ED-EB9531B528F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7F88844-324B-44EE-8911-C813FBF37F37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7F88844-324B-44EE-8911-C813FBF37F37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

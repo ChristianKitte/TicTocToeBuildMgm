@@ -23,56 +23,58 @@ class Build : NukeBuild
     ///   - JetBrains Rider            https://nuke.build/rider
     ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
     ///   - Microsoft VSCode           https://nuke.build/vscode
-
-    public static int Main () => Execute<Build>(x => x.Compile);
+    public static int Main() => Execute<Build>(x => x.Deploy);
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
     [Solution] readonly Solution Solution;
+
     [GitRepository] readonly GitRepository GitRepository;
 
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath TestsDirectory => RootDirectory / "tests";
     AbsolutePath OutputDirectory => RootDirectory / "output";
+    AbsolutePath TutorialDirectory => RootDirectory / "tutorial";
 
     Target Clean => _ => _
-        .Before(Restore)
         .Executes(() =>
         {
             SourceDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);
             TestsDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);
+            
             EnsureCleanDirectory(OutputDirectory);
         });
 
     Target Restore => _ => _
+        .DependsOn(Clean)
         .Executes(() =>
         {
             DotNetRestore(s => s
                 .SetProjectFile(Solution));
         });
-     
-    Target Deploy => _ => _
-        .After(Compile)
-        .Executes(() =>
-        {
-            //System.IO.File.CreateText(@"c:\aaa\buh.txt").Write("Buh");
-        });
+
 
     Target Compile => _ => _
         .DependsOn(Restore)
         .Executes(() =>
         {
-            var f = System.IO.File.CreateText(OutputDirectory + "\\buh.txt");
-            f.Write("Buh");
-            f.Flush();
-            f.Close();
-
             DotNetBuild(s => s
                 .SetProjectFile(Solution)
                 .SetConfiguration(Configuration)
                 .EnableNoRestore());
         });
 
+    Target Deploy => _ => _
+        .DependsOn(Compile)
+        .Executes(() =>
+        {
+            System.IO.File.Copy(TutorialDirectory + "\\tutorial.html", OutputDirectory + "\\tutorial.html");
 
+            var f = System.IO.File.CreateText(OutputDirectory + "\\buh" +
+                                              DateTime.Now.TimeOfDay.ToString().Replace(':', '_') + ".txt");
+            f.Write("Buh");
+            f.Flush();
+            f.Close();
+        });
 }
