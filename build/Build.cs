@@ -36,13 +36,14 @@ class Build : NukeBuild
     AbsolutePath TestsDirectory => RootDirectory / "tests";
     AbsolutePath OutputDirectory => RootDirectory / "output";
     AbsolutePath TutorialDirectory => RootDirectory / "tutorial";
+    AbsolutePath BinaryDirectory => RootDirectory / "TicTocToe" / "bin" / "Release" / "net5.0";
 
     Target Clean => _ => _
         .Executes(() =>
         {
             SourceDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);
             TestsDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);
-            
+
             EnsureCleanDirectory(OutputDirectory);
         });
 
@@ -53,7 +54,6 @@ class Build : NukeBuild
             DotNetRestore(s => s
                 .SetProjectFile(Solution));
         });
-
 
     Target Compile => _ => _
         .DependsOn(Restore)
@@ -71,10 +71,12 @@ class Build : NukeBuild
         {
             System.IO.File.Copy(TutorialDirectory + "\\tutorial.html", OutputDirectory + "\\tutorial.html");
 
-            var f = System.IO.File.CreateText(OutputDirectory + "\\buh" +
-                                              DateTime.Now.TimeOfDay.ToString().Replace(':', '_') + ".txt");
-            f.Write("Buh");
-            f.Flush();
-            f.Close();
+            System.IO.File.Copy(BinaryDirectory + "\\TicTocToe.exe", OutputDirectory + "\\TicTocToe.exe");
+            System.IO.File.Copy(BinaryDirectory + "\\TicTocToe.dll", OutputDirectory + "\\TicTocToe.dll");
+            System.IO.File.Copy(BinaryDirectory + "\\TicTocToe.dll.config", OutputDirectory + "\\TicTocToe.dll.config");
+            System.IO.File.Copy(BinaryDirectory + "\\TicTocToe.runtimeconfig.json", OutputDirectory + "\\TicTocToe.runtimeconfig.json");
+            System.IO.File.Copy(BinaryDirectory + "\\TicTocLib.dll", OutputDirectory + "\\TicTocLib.dll");
+            System.IO.File.Copy(BinaryDirectory + "\\Autofac.dll", OutputDirectory + "\\Autofac.dll");
+
         });
 }
