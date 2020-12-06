@@ -67,6 +67,7 @@ class Build : NukeBuild
 
     Target Deploy => _ => _
         .DependsOn(Compile)
+        .Requires(() => System.IO.File.Exists(TutorialDirectory + "\\tutorial.html"))
         .Executes(() =>
         {
             System.IO.File.Copy(TutorialDirectory + "\\tutorial.html", OutputDirectory + "\\tutorial.html");
@@ -74,9 +75,9 @@ class Build : NukeBuild
             System.IO.File.Copy(BinaryDirectory + "\\TicTocToe.exe", OutputDirectory + "\\TicTocToe.exe");
             System.IO.File.Copy(BinaryDirectory + "\\TicTocToe.dll", OutputDirectory + "\\TicTocToe.dll");
             System.IO.File.Copy(BinaryDirectory + "\\TicTocToe.dll.config", OutputDirectory + "\\TicTocToe.dll.config");
-            System.IO.File.Copy(BinaryDirectory + "\\TicTocToe.runtimeconfig.json", OutputDirectory + "\\TicTocToe.runtimeconfig.json");
+            System.IO.File.Copy(BinaryDirectory + "\\TicTocToe.runtimeconfig.json",
+                OutputDirectory + "\\TicTocToe.runtimeconfig.json");
             System.IO.File.Copy(BinaryDirectory + "\\TicTocLib.dll", OutputDirectory + "\\TicTocLib.dll");
             System.IO.File.Copy(BinaryDirectory + "\\Autofac.dll", OutputDirectory + "\\Autofac.dll");
-
         });
 }

@@ -19,6 +19,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tutorial", "Tutorial", "{78
 		tutorial\Tutorial.html = tutorial\Tutorial.html
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EA6 Erfahrungen", "EA6 Erfahrungen", "{D534CAB3-8086-45C6-A3F5-B6FB1CB6F844}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Downloads\EA6 Advanced Buildmanagement.pdf = ..\..\..\Downloads\EA6 Advanced Buildmanagement.pdf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
